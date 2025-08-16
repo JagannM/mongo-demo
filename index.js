@@ -52,7 +52,14 @@ createCourse(); */
 getCourses(); */
 
 async function getCourses() {
-  const course = await Course.find({ author: "jagan" })
+  const course = await Course
+    //.find({ author: "jagan" })
+    //.find({ author: "jagan", isPublished: true })
+    //.find([{author:'jagan'},{isPublished:true}]) //or
+    //.find({ price: 10 })
+    //.find({ price: { $gt: 10 } })
+    //.find({ price: { $gte: 10, $lte: 20 } })
+    .find({ price: { $in: [10, 20, 30] } })
     .limit(10)
     .sort({ name: 1 })
     .select({ name: 1, tags: 1 });
