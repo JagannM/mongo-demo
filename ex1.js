@@ -16,6 +16,7 @@ const courseSchema = new mongoose.Schema({
 
 const Course = mongoose.model("Course", courseSchema);
 
+//querying for cousrses
 /* async function getCourses() {
   const course = await Course.find({ isPublished: true, tags: "backend" })
     .sort({ name: 1 })
@@ -24,7 +25,8 @@ const Course = mongoose.model("Course", courseSchema);
 }
 getCourses(); */
 
-async function getCourses() {
+//querying for cousrses
+/* async function getCourses() {
   return await Course.find({ isPublished: true, tags: "backend" })
     .sort({ name: 1 })
     .select({ name: 1, author: 1 });
@@ -35,4 +37,4 @@ async function run() {
   console.log(courses);
 }
 
-run();
+run(); */
