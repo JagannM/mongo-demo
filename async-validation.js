@@ -6,6 +6,33 @@ mongoose
   .then(() => console.log("DB connected successfully"))
   .catch((err) => console.error("could not connect", err));
 
+/* async function hi(tags) {
+  console.log(tags);
+  const result = tags && tags.length > 0;
+  return result;
+} */
+
+async function hi(tags) {
+  const result = await checktags(tags);
+  return result;
+}
+
+function checktags(tags) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      console.log(tags);
+
+      //const result = tags && tags.length > 0;
+      //resolve(result);
+      const result = tags && tags.length > 0;
+      if (result) resolve(true);
+      else {
+        reject(new Error("some eror"));
+      }
+    }, 2000);
+  });
+}
+
 //Schema creation (shape of the document)
 const courseSchema = new mongoose.Schema({
   name: { type: String, minlength: 3, maxlength: 50, required: true },
@@ -15,24 +42,15 @@ const courseSchema = new mongoose.Schema({
     required: true,
     enum: ["web", "mobile", "network"],
   },
-  //tags: [String],
-  //custom validator, tags should contain atleast one value
-  /*  tags: {
+
+  tags: {
     type: Array,
     validate: {
-      validator: function (v) {
-        return v && v.length > 0;
-      },
+      isAsync: true,
+      validator: hi,
       message: "A course should have atleast one tag",
     },
-  }, */
-
-  /* price: {
-    type: Number,
-    required: function () {
-      return this.isPublished;
-    },
-  }, */
+  },
 
   date: { type: Date, default: Date.now },
   isPublished: Boolean,
@@ -47,7 +65,7 @@ async function createCourse() {
     name: "",
     category: "something",
     //tags: null,
-    //tags: ["web"],
+    tags: ["web"],
   });
   try {
     //await course.validate();
